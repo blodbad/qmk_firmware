@@ -143,19 +143,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) {
+    if (index == 0) {               // left encoder (not installed on keeb)
         if (clockwise) {
             tap_code(KC_VOLU);
         } else {
             tap_code(KC_VOLD);
         }
     }
-    else if (index == 1) {
-        if (clockwise) {
+    else if (index == 1) {  // right encoder
+      if (layer_state_is(_WOKMOK)) {
+         if (clockwise) {
             tap_code(KC_PGDN);
-        } else {
+         } else {
             tap_code(KC_PGUP);
-        }
-    }
-    return false;
+         }
+      } else if (layer_state_is(_LOWER)) {
+         if (clockwise) {
+            tap_code16(C(KC_TAB));
+         } else {
+            tap_code16(S(C(KC_TAB)));
+         }
+      } else if (layer_state_is(_RAISE)) {
+         if (clockwise) {
+            tap_code16(RGB_MOD);
+         } else {
+            tap_code16(RGB_RMOD);
+         } 
+      }
+   }
+   return false;
 }
