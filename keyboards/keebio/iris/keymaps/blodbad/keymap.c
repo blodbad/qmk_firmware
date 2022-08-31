@@ -165,9 +165,11 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
          }
       } else if (layer_state_is(_RAISE)) {
          if (clockwise) {
-            tap_code16(RGB_MOD);
+            // tap_code16(RGB_MOD);
+            rgb_matrix_step();
          } else {
-            tap_code16(RGB_RMOD);
+            // tap_code16(RGB_RMOD);
+            rgb_matrix_step_reverse();
          } 
       }
    }
